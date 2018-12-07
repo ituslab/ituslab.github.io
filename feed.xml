@@ -1,27 +1,30 @@
+---
+layout: null
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Lab IT Polsri</title>
-    <description>We &amp;lt;/&amp;gt; with 💙 for IT Polsri</description>
-    <link>https://lab.itpolsri.com/</link>
-    <atom:link href="https://lab.itpolsri.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 07 Dec 2018 22:51:13 +0700</pubDate>
-    <lastBuildDate>Fri, 07 Dec 2018 22:51:13 +0700</lastBuildDate>
-    <generator>Jekyll v3.8.3</generator>
-    
+    <title>{{ site.title | xml_escape }}</title>
+    <description>{{ site.description | xml_escape }}</description>
+    <link>{{ site.url }}{{ site.baseurl }}/</link>
+    <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
+    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
+    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
+    <generator>Jekyll v{{ jekyll.version }}</generator>
+    {% for post in site.posts limit:10 %}
       <item>
-        <title>IT FESTIVAL bersama IT POLSRI</title>
-        <description>&lt;p&gt;Saat itu, kami sedang mengikuti pelajaran Multimedia di kelas dan kebetulan masih ada dosen yang sedang mengajar disana. Tiba - tiba datanglah rombongan mahasiswa dari jurusan MI (Manajemen Informatika) untuk membagi tau bahwa dalam dekat ini akan ada festival tahunan yang selalu diselenggarakan oleh jurusan mereka. Ya, festival itu bernama &lt;code class=&quot;highlighter-rouge&quot;&gt;IT FEST&lt;/code&gt;. Singkat cerita mereka menjelaskan event - eventnya. lalu kemudian kami tertarik dengan salah satu event mereka, yaitu Lomba &lt;code class=&quot;highlighter-rouge&quot;&gt;Web Programming&lt;/code&gt;.&lt;/p&gt; &lt;p&gt;Kami ber 4 tertarik untuk mengikuti lomba tersebut. Namun, sayangnya lomba tersebut dibatasi maksimal 2 orang per tim. Setelah sekian waktu berunding, akhirnya kami dapat keputusan...</description>
-        <pubDate>Thu, 22 Nov 2018 08:54:46 +0700</pubDate>
-        <link>https://lab.itpolsri.com/blog/it-fest-bersama-it-polsri/</link>
-        <guid isPermaLink="true">https://lab.itpolsri.com/blog/it-fest-bersama-it-polsri/</guid>
-        
-        <category>developers</category>
-        
-        
-        <category>Our Devs Stories</category>
-        
+        <title>{{ post.title | xml_escape }}</title>
+        <description>{{ post.content | xml_escape | strip_html | truncatewords:100 }}</description>
+        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
+        <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
+        <guid isPermaLink="true">{{ post.url | prepend: site.baseurl | prepend: site.url }}</guid>
+        {% for tag in post.tags %}
+        <category>{{ tag | xml_escape }}</category>
+        {% endfor %}
+        {% for cat in post.categories %}
+        <category>{{ cat | xml_escape }}</category>
+        {% endfor %}
       </item>
-    
+    {% endfor %}
   </channel>
 </rss>

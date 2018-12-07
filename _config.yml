@@ -1,0 +1,73 @@
+# Site settings
+title: Lab IT Polsri
+description: A Blog and Journal about IT Polsri
+baseurl: "" # the subpath
+url: "https://lab.itpolsri.com" # the base hostname & protocol
+
+name: Lab IT Polsri
+description: We &lt;/&gt; with 💙 for IT Polsri
+avatar: /assets/img/itpolsri.png
+email: itpolsri@gmail.com
+github_username:  itpolsri
+instagram_username: itpolsri
+disqus_username: itpolsri
+gplus_username: itpolsri
+twitter_username: labitpolsri
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /blog/:title/
+
+# html minify
+compress_html:
+  clippings: all
+  comments: all
+  endings: []
+  profile: false
+
+# Links to include in menu navigation
+# For external links add external: true
+links:
+  - title: Home
+    url: /
+  - title: Blog
+    url: /blog
+  - title: Series
+    url: /series
+  - title: Tags
+    url: /tags
+  - title: About Us
+    url: /about
+
+# plugins
+plugins: [ jekyll-paginate-v2, jekyll-feed ]
+
+# exclude
+exclude: [
+  'src',
+  'node_modules',
+  '_drafts',
+  'gulpfile.js',
+  'initpost.sh',
+  'package.json',
+  'package-lock.json',
+  'README.md'
+]
+
+# collections
+collections:
+  projects:
+    output: true
+    permalink: /projects/:path/
+
+# pagination config
+pagination:
+  enabled: true
+  debug: false
+  per_page: 5
+  sort_reverse: true
+  sort_field: 'date'
+  paginate_path: /page/:num/
+  permalink: '/page/:num/'
+  title: ':title'
