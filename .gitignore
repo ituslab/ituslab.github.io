@@ -1,0 +1,4 @@
+node_modules/
+.publish/
+_site/
+package-lock.json
