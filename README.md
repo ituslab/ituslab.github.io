@@ -1,13 +1,25 @@
 ## Site Notes
 
+#### Install Depedencies
+- `npm install` for install node depedencies
+- `bundle install` for install bundle depedencies
+
+#### Jekyll Mode
+- `export JEKYLL_ENV=development` for mode development
+- `export JEKYLL_ENV=production` for mode production
+
+#### Initpost command
+- `./initpost -h` output instructions
+- `./initpost -c {POST_TITLE}` create post
+- `./initpost -d {POST_TITLE}` create draft post
+- `./initpost -p {POST_TITLE}` publish/promote a draft to a post
+
 #### How to deploy site in Github Pages
-1. Run `export JEKYLL_ENV=production`
+1. `npm run build` for Compile sass, js and build site files
 
-2. Compile sass and js along build site files > `npm run gulp build`
+2. `npm run deploy` for Deploy to other branch which on github pages
 
-3. Deploy to branch gh-pages > `npm run gulp deploy`
+3. Commit files and push to development branch.
 
-4. Commit files and push to branch master.
-
-#### How to run server in local
-run `jekyll server --watch baseurl "" --host=[IP ADDR]`
+#### How to run server in local for development
+run `npm start` or `bundle exec jekyll server --host=[IP ADDR]`
