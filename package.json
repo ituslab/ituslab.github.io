@@ -4,8 +4,9 @@
   "description": "Our Lab Website",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "test",
-    "gulp": "gulp"
+    "start": "gulp",
+    "build": "gulp build",
+    "deploy": "gulp deploy"
   },
   "author": "Sutan Nst.",
   "license": "Unlicense",

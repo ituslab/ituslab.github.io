@@ -1,4 +1,7 @@
+vendor/
 node_modules/
+.bundle/
 .publish/
 _site/
 package-lock.json
+Gemfile.lock

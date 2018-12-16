@@ -9,14 +9,16 @@ const
 	gimagemin = require('gulp-imagemin'),
 	gbabel = require('gulp-babel'),
 	gdeploy = require('gulp-gh-pages'),
-	cp = require('child_process');
+	cp = require('child_process')
 
-let jekyllCommand = (/^win/.test(process.platform)) ? 'jekyll.bat' : 'jekyll';
+let
+	bundleCommand = 'bundle',
+	jekyllOption = ['exec', 'jekyll', 'build']
 
 const app = {
 	sass: {
-		src: 'src/sass/main.scss',
-    path: 'src/sass/**/*.scss',
+		main: 'src/sass/main.scss',
+    src: 'src/sass/**/*.scss',
     dest: 'assets/css/'
 	},
   script: {
@@ -33,22 +35,26 @@ const app = {
 		dest: 'assets/img/'
 	},
 	jekyll: {
-		watch: ['*.html', '_includes/*.html', '_layouts/*.html', '_posts/*', '_config.yml']
+		src: ['*.html', '_includes/*.html', '_layouts/*.html', '_posts/*', '_config.yml']
 	}
 }
 
 const jekyll = done => {
-	return cp.spawn(jekyllCommand, ['build'], {stdio: 'inherit'})
-	.on('close', done);
+	return cp.spawn(bundleCommand, jekyllOption, {stdio: 'inherit'}).on('close', done)
+}
+
+const jekyllRebuild = () => {
+	jekyllOption = ['exec', 'jekyll', 'build']
+	return jekyll
 }
 
 const sass = () => {
-  return gulp.src(app.sass.src)
+  return gulp.src(app.sass.main)
   .pipe(gplumber())
   .pipe(gsass({outputStyle: 'compressed'}))
 	.pipe(gprefix())
   .pipe(gulp.dest(app.sass.dest))
-};
+}
 
 const script = () => {
 	return gulp.src(app.script.src, { sourcemaps: true })
@@ -60,7 +66,7 @@ const script = () => {
 	}))
 	.pipe(guglify()) // {mangle: true}
   .pipe(gconcat('main.js'))
-  .pipe(gulp.dest(app.script.dest));
+  .pipe(gulp.dest(app.script.dest))
 }
 
 const imagemin = () => {
@@ -71,23 +77,25 @@ const imagemin = () => {
 		progressive: true,
 		interlaced: true
 	}))
-	.pipe(gulp.dest(app.imagemin.dest));
+	.pipe(gulp.dest(app.imagemin.dest))
 }
 
-const build = gulp.series(gulp.parallel(sass, script, imagemin), jekyll);
+const build = gulp.series(gulp.parallel(sass, script, imagemin), jekyll)
 
-const deploy = () => gulp.src('_site/**/*').pipe(gdeploy({branch: 'master'}));
+const deploy = () => {
+	build()
+	return gulp.src('_site/**/*').pipe(gdeploy({branch: 'master'}))
+}
 
 const watch = () => {
-	build();
-	gulp.watch(app.sass.path, sass);
-	gulp.watch(app.script.src, script);
-	gulp.watch(app.imagemin.src, imagemin);
-	gulp.watch(app.jekyll.watch, jekyll);
+	jekyllOption = ['exec', 'jekyll', 'server', '--host=0.0.0.0']
+	build()
+	gulp.watch(app.sass.src, sass)
+	gulp.watch(app.script.src, script)
+	gulp.watch(app.imagemin.src, imagemin)
+	gulp.watch(app.jekyll.src, jekyllRebuild)
 }
 
-gulp.task('build', build);
-
-gulp.task('deploy', deploy);
-
-gulp.task('default', watch);
+gulp.task('build', build)
+gulp.task('deploy', deploy)
+gulp.task('default', watch)
